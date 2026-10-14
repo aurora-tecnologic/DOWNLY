@@ -12,7 +12,20 @@
           "package_name": "com.aurora.downly"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "532051765589-relleno.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.aurora.downly",
+            "certificate_hash": "ce3d3515e91452a3655074e9dd0047319312ace2"
+          }
+        },
+        {
+          "client_id": "532051765589-relleno.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyBEexSe-Y07iB_6GTwxa0dvVTGKnzllVmg"
@@ -20,7 +33,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "532051765589-relleno.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }
