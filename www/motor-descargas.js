@@ -1,7 +1,7 @@
 // ============================================================
 // MOTOR DE DESCARGAS DOWNLY
 // ============================================================
-const URL_BACKEND = 'https://tu-servidor.onrender.com'; // CAMBIA ESTO POR TU URL DE RENDER
+const URL_BACKEND = 'https://downly-server-prueba-beta-v-1-0.onrender.com'; // CAMBIA ESTO POR TU URL DE RENDER
 
 let itemsSeleccionados = new Set();
 
