@@ -4,20 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Downly</title>
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#02060E">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Downly">
+    <link rel="apple-touch-icon" href="logo.png">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <!-- Fondo animado global -->
     <div class="background-animado">
         <div class="forma forma-1"></div>
         <div class="forma forma-2"></div>
     </div>
 
-    <!-- CONTENEDOR PRINCIPAL DE PANTALLAS -->
     <div id="app-container">
 
-        <!-- PANTALLA 1: ONBOARDING -->
+        <!-- ONBOARDING -->
         <section id="pantalla-onboarding" class="pantalla activa">
             <div class="panel-cristal onboarding-card">
                 <div class="header-downly">
@@ -26,30 +30,25 @@
                     </div>
                 </div>
                 <p class="subtitulo">Descarga videos y audio de tus redes favoritas con la mejor calidad.</p>
-                
                 <div class="onboarding-pasos">
                     <div class="paso activo">
-                        <div class="icono-svg"></div>
                         <h3>Analiza</h3>
                         <p>Pega el enlace y detectamos la plataforma automáticamente.</p>
                     </div>
                     <div class="paso">
-                        <div class="icono-svg"></div>
                         <h3>Elige</h3>
                         <p>Selecciona la calidad y el formato (MP4 o MP3).</p>
                     </div>
                     <div class="paso">
-                        <div class="icono-svg"></div>
                         <h3>Descarga</h3>
                         <p>Guarda tus archivos donde quieras con un toque.</p>
                     </div>
                 </div>
-
                 <button class="btn-principal" onclick="siguienteOnboarding()">Siguiente</button>
             </div>
         </section>
 
-        <!-- PANTALLA 2: LOGIN -->
+        <!-- LOGIN -->
         <section id="pantalla-login" class="pantalla">
             <div class="panel-cristal auth-card">
                 <div class="header-downly">
@@ -59,66 +58,53 @@
                 </div>
                 <h2 class="titulo-medio">Iniciar Sesión</h2>
                 <p class="subtitulo">Accede para guardar tu historial</p>
-                
                 <input type="email" id="login-email" placeholder="Correo electrónico" class="input-cristal">
                 <input type="password" id="login-password" placeholder="Contraseña" class="input-cristal">
-                
                 <button class="btn-principal" onclick="iniciarSesion()">Entrar</button>
                 <button class="btn-google" onclick="loginGoogle()">
                     <svg viewBox="0 0 24 24" width="20" height="20" fill="white"><path d="M12.48 10.92v3.28h7.84c-.24 1.84-.853 3.187-1.787 4.133-1.147 1.147-2.933 2.4-6.053 2.4-4.827 0-8.6-3.893-8.6-8.72s3.773-8.72 8.6-8.72c2.6 0 4.507 1.027 5.907 2.347l2.307-2.307C18.747 1.44 16.133 0 12.48 0 5.867 0 .307 5.387.307 12s5.56 12 12.173 12c3.573 0 6.267-1.173 8.373-3.36 2.16-2.16 2.84-5.213 2.84-7.667 0-.76-.053-1.467-.173-2.053H12.48z"/></svg>
                     Continuar con Google
                 </button>
-                
                 <p class="texto-cambio">¿No tienes cuenta? <span onclick="cambiarPantalla('pantalla-registro')">Regístrate</span></p>
             </div>
         </section>
 
-        <!-- PANTALLA 3: REGISTRO -->
+        <!-- REGISTRO -->
         <section id="pantalla-registro" class="pantalla">
             <div class="panel-cristal auth-card registro-card">
                 <h2 class="titulo-medio">Crear Cuenta</h2>
                 <p class="subtitulo">Únete y empieza a descargar</p>
-                
                 <input type="text" id="reg-nombre" placeholder="Nombre completo" class="input-cristal">
                 <input type="email" id="reg-email" placeholder="Correo electrónico" class="input-cristal">
                 <input type="password" id="reg-password" placeholder="Contraseña segura" class="input-cristal">
-                
                 <button class="btn-principal btn-registro" onclick="registrarUsuario()">Registrarme</button>
                 <button class="btn-google" onclick="loginGoogle()">Continuar con Google</button>
-                
                 <p class="texto-cambio">¿Ya tienes cuenta? <span onclick="cambiarPantalla('pantalla-login')">Inicia Sesión</span></p>
             </div>
         </section>
 
-        <!-- PANTALLA 4: HOME -->
+        <!-- HOME -->
         <section id="pantalla-home" class="pantalla">
             <div class="header-downly">
                 <div class="logo-container">
                     <img src="logo.png" alt="Downly" class="logo-img">
                 </div>
             </div>
-            
             <div class="home-info">
                 <h2>Hola, <span id="nombre-usuario">Usuario</span></h2>
                 <div class="avatar-usuario" onclick="cerrarSesion()"></div>
             </div>
-
             <div class="panel-cristal input-container">
                 <input type="text" id="url-input" placeholder="Pega el enlace aquí..." class="input-cristal">
                 <button class="btn-analizar" onclick="botonAnalizar()">Analizar</button>
             </div>
-
             <div id="alerta-deteccion" class="panel-cristal alerta-oculta">
                 <span id="texto-alerta">Enlace detectado</span>
             </div>
-
-            <!-- Contenedor para Carruseles -->
             <div id="contenedor-carrusel" class="panel-cristal carrusel-oculto">
                 <div id="visor-carrusel" class="visor-deslizable"></div>
                 <button class="btn-principal" onclick="botonDescargarSeleccionados()">Descargar Seleccionados</button>
             </div>
-
-            <!-- Panel de descarga individual -->
             <div id="panel-descarga" class="panel-cristal descarga-oculta">
                 <div class="descarga-info">
                     <span id="nombre-archivo">Video.mp4</span>
@@ -133,9 +119,10 @@
 
     </div>
 
-    <!-- Scripts -->
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
     <script src="seguridad.js"></script>
     <script src="motor-descargas.js"></script>
     <script src="app.js"></script>
 </body>
-                      </html>
+</html>
