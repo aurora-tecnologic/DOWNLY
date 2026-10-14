@@ -30,21 +30,11 @@ jobs:
       - name: Agregar plataforma Android
         run: npx cap add android
 
-      - name: Copiar icono de la app
-        run: |
-          mkdir -p android/app/src/main/res/mipmap-hdpi
-          mkdir -p android/app/src/main/res/mipmap-mdpi
-          mkdir -p android/app/src/main/res/mipmap-xhdpi
-          mkdir -p android/app/src/main/res/mipmap-xxhdpi
-          mkdir -p android/app/src/main/res/mipmap-xxxhdpi
-          cp www/icono.png android/app/src/main/res/mipmap-hdpi/ic_launcher.png
-          cp www/icono.png android/app/src/main/res/mipmap-mdpi/ic_launcher.png
-          cp www/icono.png android/app/src/main/res/mipmap-xhdpi/ic_launcher.png
-          cp www/icono.png android/app/src/main/res/mipmap-xxhdpi/ic_launcher.png
-          cp www/icono.png android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png
-
       - name: Sincronizar web con Android
         run: npx cap sync android
+
+      - name: Copiar google-services.json a Android
+        run: cp www/google-services.json android/app/google-services.json
 
       - name: Construir APK
         run: |
@@ -52,8 +42,18 @@ jobs:
           chmod +x gradlew
           ./gradlew assembleDebug
 
-      - name: Subir APK
+      - name: Firmar APK
+        uses: r0adkll/sign-android-release@v1
+        id: sign_app
+        with:
+          releaseDirectory: android/app/build/outputs/apk/debug
+          signingKeyBase64: ${{ secrets.KEYSTORE_BASE64 }}
+          alias: ${{ secrets.KEY_ALIAS }}
+          keyStorePassword: ${{ secrets.KEYSTORE_PASSWORD }}
+          keyPassword: ${{ secrets.KEY_PASSWORD }}
+
+      - name: Subir APK Firmado
         uses: actions/upload-artifact@v4
         with:
-          name: Downly-APK
-          path: android/app/build/outputs/apk/debug/app-debug.apk
+          name: Downly-APK-Firmado
+          path: ${{ steps.sign_app.outputs.signedReleaseFile }}
