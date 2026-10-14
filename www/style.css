@@ -1,0 +1,136 @@
+/* --- RESET Y FUENTES --- */
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', system-ui, sans-serif; }
+body { background: #02060E; color: white; overflow: hidden; height: 100vh; width: 100vw; }
+
+/* --- FONDO ANIMADO --- */
+.background-animado {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
+    background: linear-gradient(135deg, #02060E, #0A1B3F, #0356C5);
+}
+.forma {
+    position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.6;
+    animation: flotar 10s infinite alternate ease-in-out;
+}
+.forma-1 { width: 300px; height: 300px; background: #00E5FF; top: -100px; right: -50px; }
+.forma-2 { width: 250px; height: 250px; background: #0356C5; bottom: -100px; left: -50px; animation-delay: -5s; }
+
+@keyframes flotar {
+    0% { transform: translate(0, 0) scale(1); }
+    100% { transform: translate(30px, 50px) scale(1.1); }
+}
+
+/* --- CONTENEDOR DE PANTALLAS --- */
+#app-container { width: 100%; height: 100%; position: relative; }
+.pantalla {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    padding: 24px;
+    opacity: 0; pointer-events: none; transform: translateX(50px);
+    transition: all 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+    overflow-y: auto;
+}
+.pantalla.activa { opacity: 1; pointer-events: auto; transform: translateX(0); }
+.pantalla.saliendo { opacity: 0; transform: translateX(-50px); }
+
+/* --- GLASSMORPHISM --- */
+.panel-cristal {
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 24px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    padding: 24px;
+    width: 100%;
+    max-width: 400px;
+}
+
+/* --- ENCABEZADO DOWNLY --- */
+.header-downly {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px 0;
+    width: 100%;
+    margin-bottom: 16px;
+}
+.logo-container {
+    width: 120px; 
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.logo-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    filter: drop-shadow(0px 0px 15px rgba(0, 229, 255, 0.4));
+}
+
+/* --- TIPOGRAFÍA Y BOTONES --- */
+.titulo-grande { font-size: 2.5rem; font-weight: 700; letter-spacing: -1px; margin-bottom: 8px; }
+.titulo-medio { font-size: 1.8rem; font-weight: 600; margin-bottom: 8px; }
+.subtitulo { font-size: 1rem; color: rgba(255,255,255,0.6); margin-bottom: 24px; text-align: center; }
+
+.input-cristal {
+    width: 100%; padding: 16px; margin-bottom: 16px;
+    background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 16px; color: white; font-size: 1rem; outline: none;
+    transition: all 0.3s ease;
+}
+.input-cristal:focus { border-color: #00E5FF; box-shadow: 0 0 15px rgba(0, 229, 255, 0.3); }
+
+.btn-principal {
+    width: 100%; padding: 16px; border: none; border-radius: 16px;
+    background: linear-gradient(135deg, #0356C5, #00E5FF);
+    color: white; font-size: 1.1rem; font-weight: 600; cursor: pointer;
+    box-shadow: 0 4px 20px rgba(0, 229, 255, 0.4);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.btn-principal:active { transform: scale(0.95); }
+
+.btn-google {
+    width: 100%; padding: 16px; margin-top: 12px; border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 16px; background: rgba(255,255,255,0.05);
+    color: white; display: flex; align-items: center; justify-content: center; gap: 10px;
+    cursor: pointer; transition: background 0.3s;
+}
+.btn-google:hover { background: rgba(255,255,255,0.1); }
+
+.texto-cambio { text-align: center; margin-top: 20px; font-size: 0.9rem; color: rgba(255,255,255,0.6); }
+.texto-cambio span { color: #00E5FF; cursor: pointer; font-weight: 600; }
+
+/* --- ONBOARDING --- */
+.onboarding-pasos { margin: 20px 0; }
+.paso { display: none; text-align: center; }
+.paso.activo { display: block; animation: fadeIn 0.5s ease; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+/* --- HOME --- */
+.home-info { width: 100%; max-width: 400px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+.avatar-usuario { width: 40px; height: 40px; border-radius: 50%; background: #00E5FF; cursor: pointer; }
+.input-container { display: flex; gap: 10px; padding: 10px; margin-bottom: 20px; }
+.input-container .input-cristal { margin-bottom: 0; }
+.btn-analizar { padding: 0 20px; border: none; border-radius: 16px; background: #0356C5; color: white; font-weight: 600; cursor: pointer; }
+
+/* --- ALERTAS Y DESCARGAS --- */
+.alerta-oculta { display: none; }
+.alerta-visible { display: block; animation: slideDown 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55); border-color: #00E5FF; }
+@keyframes slideDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+
+.descarga-oculta { display: none; }
+.descarga-visible { display: block; animation: fadeIn 0.5s ease; }
+.barra-progreso-fondo { width: 100%; height: 10px; background: rgba(255,255,255,0.1); border-radius: 10px; margin: 10px 0; overflow: hidden; }
+.barra-progreso-relleno { width: 0%; height: 100%; background: linear-gradient(90deg, #0356C5, #00E5FF); border-radius: 10px; transition: width 0.3s ease; box-shadow: 0 0 10px #00E5FF; }
+
+/* --- CARRUSEL --- */
+.carrusel-oculto { display: none; }
+.carrusel-visible { display: block; animation: fadeIn 0.5s ease; }
+.visor-deslizable { display: flex; overflow-x: auto; gap: 12px; padding-bottom: 16px; scroll-snap-type: x mandatory; }
+.visor-deslizable img { width: 120px; height: 120px; object-fit: cover; border-radius: 16px; border: 2px solid transparent; cursor: pointer; scroll-snap-align: start; }
+.visor-deslizable img.seleccionado { border-color: #00E5FF; box-shadow: 0 0 15px rgba(0, 229, 255, 0.5); }
+
+/* --- REGISTRO DINÁMICO --- */
+#pantalla-registro.activa ~ .background-animado { background: linear-gradient(135deg, #0A1B3F, #00E5FF, #0356C5); }
+.registro-card { border-color: rgba(0, 229, 255, 0.4); box-shadow: 0 0 40px rgba(0, 229, 255, 0.2); }
