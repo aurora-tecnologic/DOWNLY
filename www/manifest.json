@@ -1,0 +1,14 @@
+{
+  "name": "Downly",
+  "short_name": "Downly",
+  "description": "Descargador de videos y audio",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#02060E",
+  "theme_color": "#0356C5",
+  "orientation": "portrait",
+  "icons": [
+    { "src": "logo.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "logo.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}
