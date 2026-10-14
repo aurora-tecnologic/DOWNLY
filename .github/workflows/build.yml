@@ -1,0 +1,59 @@
+name: Build APK Downly
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout del código
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Configurar Java (Android)
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: '17'
+
+      - name: Instalar dependencias
+        run: npm install
+
+      - name: Agregar plataforma Android
+        run: npx cap add android
+
+      - name: Copiar icono de la app
+        run: |
+          mkdir -p android/app/src/main/res/mipmap-hdpi
+          mkdir -p android/app/src/main/res/mipmap-mdpi
+          mkdir -p android/app/src/main/res/mipmap-xhdpi
+          mkdir -p android/app/src/main/res/mipmap-xxhdpi
+          mkdir -p android/app/src/main/res/mipmap-xxxhdpi
+          cp www/icono.png android/app/src/main/res/mipmap-hdpi/ic_launcher.png
+          cp www/icono.png android/app/src/main/res/mipmap-mdpi/ic_launcher.png
+          cp www/icono.png android/app/src/main/res/mipmap-xhdpi/ic_launcher.png
+          cp www/icono.png android/app/src/main/res/mipmap-xxhdpi/ic_launcher.png
+          cp www/icono.png android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png
+
+      - name: Sincronizar web con Android
+        run: npx cap sync android
+
+      - name: Construir APK
+        run: |
+          cd android
+          chmod +x gradlew
+          ./gradlew assembleDebug
+
+      - name: Subir APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: Downly-APK
+          path: android/app/build/outputs/apk/debug/app-debug.apk
