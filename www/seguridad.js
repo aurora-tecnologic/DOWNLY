@@ -1,54 +1,38 @@
-// --- SEGURIDAD Y CIFRADO ---
-const CLAVE_SECRETA = "DownlySecure2026Key!"; 
+const CLAVE_SECRETA = "DownlySecure2026Key!";
+const VERSION_ACTUAL = "1.0.0";
+const URL_VERSION = "https://downly-server-prueba-beta-v-1-0.onrender.com/version.json";
 
 function guardarDatosSeguros(clave, valor) {
     try {
         const valorCifrado = CryptoJS.AES.encrypt(JSON.stringify(valor), CLAVE_SECRETA).toString();
         localStorage.setItem(clave, valorCifrado);
-    } catch(e) {
-        console.error("Error guardando datos", e);
-    }
+    } catch(e) { console.error("Error guardando datos", e); }
 }
-
 function obtenerDatosSeguros(clave) {
     const valorCifrado = localStorage.getItem(clave);
     if (!valorCifrado) return null;
     try {
         const bytes = CryptoJS.AES.decrypt(valorCifrado, CLAVE_SECRETA);
         return JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
-    } catch (e) {
-        return null;
-    }
+    } catch (e) { return null; }
 }
-
-// --- ANTI-MANIPULACIÓN ---
 document.addEventListener('contextmenu', event => event.preventDefault());
 document.onkeydown = function(e) {
-    if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I') || (e.ctrlKey && e.shiftKey && e.key === 'J')) {
-        return false;
-    }
+    if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I') || (e.ctrlKey && e.shiftKey && e.key === 'J')) return false;
 };
-
 const observer = new MutationObserver((mutations) => {
     mutations.forEach((mutation) => {
         mutation.addedNodes.forEach((node) => {
-            if (node.tagName === 'SCRIPT' && !node.src.includes(window.location.hostname)) {
-                console.error("Intento de inyección detectado");
-            }
+            if (node.tagName === 'SCRIPT' && !node.src.includes(window.location.hostname)) console.error("Intento de inyección detectado");
         });
     });
 });
 observer.observe(document.body, { childList: true, subtree: true });
 
-// --- ACTUALIZACIÓN FORZADA ---
-const VERSION_ACTUAL = "1.0.0";
-const URL_VERSION = "https://tu-servidor.com/version.json"; 
-
 async function verificarActualizacion() {
     try {
         const response = await fetch(URL_VERSION);
         const data = await response.json();
-        
         if (data.version > VERSION_ACTUAL) {
             document.body.innerHTML = `
                 <div style="position: fixed; top:0; left:0; width:100%; height:100%; background: #02060E; display: flex; justify-content: center; align-items: center; flex-direction: column; z-index: 9999; padding: 24px;">
@@ -73,12 +57,10 @@ async function verificarActualizacion() {
                     boton.disabled = false;
                     boton.style.opacity = '1';
                     boton.textContent = 'Instalar Actualización';
-                    boton.onclick = () => alert('Reiniciando para instalar...');
+                    boton.onclick = () => { window.location.href = data.url; };
                 }
                 barra.style.width = progreso + '%';
             }, 300);
         }
-    } catch (error) {
-        console.log("Modo offline");
-    }
+    } catch (error) { console.log("Modo offline"); }
 }
